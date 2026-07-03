@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ResTacVLA: Feeling the Unexpected</title>
+    <meta
+      name="description"
+      content="ResTacVLA is a residual tactile Vision-Language-Action framework for contact-rich manipulation, using predictive-coding-inspired residual tactile representations and surprise-aware gating."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero" id="top">
+      <video
+        class="hero__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        src="assets/videos/lightbulb/tactile-3.mp4"
+        aria-label="ResTacVLA contact-rich manipulation demo"
+      ></video>
+      <div class="hero__shade"></div>
+      <nav class="hero__nav" aria-label="Primary navigation">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#demos">Demos</a>
+        <a href="#results">Results</a>
+        <a href="#citation">Citation</a>
+      </nav>
+      <div class="hero__content">
+        <p class="eyebrow">IROS 2026</p>
+        <h1><span>Feeling the</span> <span>Unexpected</span></h1>
+        <p class="hero__subtitle">
+          ResTacVLA for Contact-Rich Manipulation via Residual Tactile Representation
+        </p>
+        <p class="hero__authors">
+          Pengwei Zhang, Bin Xie, Ce Hao, Xinpan Meng, Xinyu Guo, Fang Deng, Long Cheng, Tiancai Wang
+        </p>
+        <div class="hero__actions" aria-label="Project links">
+          <a class="action action--primary" href="assets/paper/restacvla.pdf">Paper</a>
+          <span class="action action--disabled" aria-disabled="true">Code coming soon</span>
+          <span class="action action--disabled" aria-disabled="true">Data coming soon</span>
+          <a class="action" href="#demos">Watch demos</a>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#article">Scroll to explore</a>
+    </header>
+
+    <main class="article-body" id="article">
+      <div class="article-layout">
+        <aside class="outline" aria-label="Article outline">
+          <nav>
+            <a href="#title" aria-current="true">Title</a>
+            <a href="#abstract">Abstract</a>
+            <a href="#contributions">Contributions</a>
+            <a href="#method">Method</a>
+            <a href="#tasks">Tasks</a>
+            <a href="#demos">Demonstrations</a>
+            <a href="#results">Results</a>
+            <a href="#interpretability">Interpretability</a>
+            <a href="#robustness">Robustness</a>
+            <a href="#citation">Citation</a>
+          </nav>
+        </aside>
+
+        <button class="contents-button" type="button" aria-expanded="false" aria-controls="mobile-outline">
+          Contents
+        </button>
+        <div class="mobile-outline" id="mobile-outline" hidden>
+          <nav aria-label="Mobile article outline">
+            <a href="#title">Title</a>
+            <a href="#abstract">Abstract</a>
+            <a href="#contributions">Contributions</a>
+            <a href="#method">Method</a>
+            <a href="#tasks">Tasks</a>
+            <a href="#demos">Demonstrations</a>
+            <a href="#results">Results</a>
+            <a href="#interpretability">Interpretability</a>
+            <a href="#robustness">Robustness</a>
+            <a href="#citation">Citation</a>
+          </nav>
+        </div>
+
+        <article class="article-shell">
+          <section class="title-block section-anchor" id="title">
+            <p class="eyebrow">Residual tactile VLA for physical interaction</p>
+            <h2>ResTacVLA makes <span class="accent-text">touch count</span> only when <span class="accent-text">vision becomes unreliable</span>.</h2>
+            <p>
+              Contact-rich manipulation needs tactile feedback, but directly injecting high-dimensional touch into VLA
+              policies can be drowned out by visual features. ResTacVLA reformulates tactile sensing as
+              <mark>residual information gain</mark>: the part of touch that visual priors fail to predict.
+            </p>
+          </section>
+
+          <section class="section-anchor" id="abstract">
+            <h2>Abstract</h2>
+            <p>
+              Tactile perception is indispensable for contact-rich manipulation, yet integrating it into
+              Vision-Language-Action models often induces <mark class="mark-red">modality collapse</mark>, where
+              high-bandwidth visual features overshadow sparse tactile cues. Inspired by <mark>predictive coding</mark>,
+              ResTacVLA represents tactile data as the discrepancy between visual priors and physical sensations. The
+              resulting residual tactile representation filters visually predictable dynamics and turns sparse tactile
+              signals into dense, high-value information gain.
+            </p>
+            <p>
+              Residuals are discretized into <mark class="mark-green">latent contact primitives</mark> with a
+              vector-quantized bottleneck, while a <mark>surprise-aware gate</mark> adaptively prioritizes tactile
+              integration during visually unreliable phases. Experiments across five real-world contact-rich tasks show
+              that ResTacVLA consistently outperforms vision-only and naive tactile fusion baselines while remaining
+              robust to unexpected disturbances.
+            </p>
+            <figure class="figure-full">
+              <img src="assets/figures/teaser.png" alt="Predictive-coding-inspired residual tactile fusion in ResTacVLA" />
+              <figcaption>Predictive-coding-inspired residual tactile fusion in ResTacVLA.</figcaption>
+            </figure>
+          </section>
+
+          <section class="section-anchor" id="contributions">
+            <h2>Contributions</h2>
+            <div class="contribution-grid">
+              <article class="contribution-card contribution-card--green">
+                <span>01</span>
+                <h3>Residual tactile representation</h3>
+                <p>
+                  Tactile feedback is modeled as the <strong>residual</strong> between predicted and actual physical sensation,
+                  reducing visual redundancy and mitigating modality imbalance.
+                </p>
+              </article>
+              <article class="contribution-card contribution-card--gold">
+                <span>02</span>
+                <h3>Latent contact primitives</h3>
+                <p>
+                  A cross-modal predictor and VQ bottleneck transform high-dimensional tactile images into compact
+                  primitives that capture <strong>critical contact events</strong>.
+                </p>
+              </article>
+              <article class="contribution-card contribution-card--green">
+                <span>03</span>
+                <h3>Surprise-aware gating</h3>
+                <p>
+                  Prediction uncertainty drives a gate that suppresses tactile noise in free space and <strong>amplifies touch</strong>
+                  when physical interaction becomes ambiguous.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-anchor" id="method">
+            <h2>Method</h2>
+            <p class="keyline">
+              ResTacVLA has two stages: <strong>learn what touch adds beyond vision</strong>, then
+              <strong>inject it only when surprise is high</strong>.
+            </p>
+            <p>
+              First, the cross-modal predictor estimates tactile latents from wrist-camera observations and extracts
+              <mark>residuals</mark> from actual GelSight signals. Second, the frozen residual encoder injects
+              <mark class="mark-green">quantized contact primitives</mark> into the action expert through a
+              <mark>surprise-aware gate</mark>.
+            </p>
+            <figure class="figure-full">
+              <img src="assets/figures/method.png" alt="Overall architecture of ResTacVLA" />
+              <figcaption>
+                Step 1 learns residual tactile representations; Step 2 uses surprise-aware tactile policy learning.
+              </figcaption>
+            </figure>
+            <div class="method-steps">
+              <article>
+                <h3>Step 1: Residual tactile learning</h3>
+                <p>
+                  The model predicts tactile latents from wrist vision, subtracts them from actual tactile embeddings,
+                  and quantizes the residual into latent contact primitives.
+                </p>
+              </article>
+              <article>
+                <h3>Step 2: Surprise-aware policy</h3>
+                <p>
+                  A learned gate uses prediction uncertainty to decide when tactile primitives should influence the
+                  action expert, preserving visual stability during free-space motion.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-anchor" id="tasks">
+            <h2>Contact-Rich Tasks</h2>
+            <p>
+              The benchmark covers five real-world tasks that require fine-grained physical feedback: threaded
+              screwing, plug insertion, peg transfer, plate wiping, and peg-in-hole insertion.
+            </p>
+            <figure class="figure-full">
+              <img src="assets/figures/tasks.png" alt="Five contact-rich manipulation tasks used for evaluation" />
+              <figcaption>Five contact-rich manipulation tasks used to evaluate tactile feedback under occlusion and contact ambiguity.</figcaption>
+            </figure>
+          </section>
+
+          <section class="section-anchor" id="demos">
+            <h2>Demonstrations</h2>
+            <p>
+              Browse representative rollouts across tasks. Videos are grouped by task and include vision-only
+              baselines, tactile ResTacVLA runs, and generalization settings where available.
+            </p>
+            <div class="demo-gallery">
+              <div class="demo-tabs" role="tablist" aria-label="Demo tasks"></div>
+              <div class="demo-description" aria-live="polite"></div>
+              <div class="demo-grid" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <section class="section-anchor" id="results">
+            <h2>Results</h2>
+            <p>
+              ResTacVLA achieves the strongest average success rate across the contact-rich benchmark, improving over
+              the vision-only VLA baseline by 34.6 percentage points and over Diffusion Policy without tactile input by
+              44.0 percentage points.
+            </p>
+            <div class="result-bars" aria-label="Average success rate by method">
+              <div class="bar-row" style="--value: 62.8">
+                <span>ResTacVLA</span><strong>62.8%</strong><i></i>
+              </div>
+              <div class="bar-row" style="--value: 42.3">
+                <span>pi0.5 w/ T-UniT</span><strong>42.3%</strong><i></i>
+              </div>
+              <div class="bar-row" style="--value: 38">
+                <span>DP w/ T-ResTac</span><strong>38.0%</strong><i></i>
+              </div>
+              <div class="bar-row" style="--value: 28.2">
+                <span>pi0.5 Vision Only</span><strong>28.2%</strong><i></i>
+              </div>
+              <div class="bar-row" style="--value: 18.8">
+                <span>DP w/o T</span><strong>18.8%</strong><i></i>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <caption>Quantitative comparison on the contact-rich manipulation benchmark.</caption>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Lightbulb-I</th>
+                    <th>Plug-I</th>
+                    <th>Peg-I</th>
+                    <th>Transfer</th>
+                    <th>Wiping</th>
+                    <th>Average</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>pi0.5 Vision Only</td>
+                    <td>8.0</td>
+                    <td>20.0</td>
+                    <td>40.0</td>
+                    <td>26.7</td>
+                    <td>20.0</td>
+                    <td>28.2</td>
+                  </tr>
+                  <tr>
+                    <td>pi0.5 w/ T-UniT</td>
+                    <td>12.0</td>
+                    <td>32.0</td>
+                    <td>53.3</td>
+                    <td>66.7</td>
+                    <td>33.3</td>
+                    <td>42.3</td>
+                  </tr>
+                  <tr class="highlight-row">
+                    <td>ResTacVLA</td>
+                    <td>32.0</td>
+                    <td>60.0</td>
+                    <td>80.0</td>
+                    <td>60.0</td>
+                    <td>60.0</td>
+                    <td>62.8</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section-anchor" id="interpretability">
+            <h2>Interpretability</h2>
+            <p>
+              Latent contact primitives separate free-space motion from task-specific
+              <mark class="mark-green">physical interaction events</mark>. The surprise-aware gate stays low during
+              approach and rises as <mark class="mark-green">contact</mark> and <mark>thread engagement</mark> become
+              important.
+            </p>
+            <div class="two-figure-grid">
+              <figure>
+                <img src="assets/figures/primitives.png" alt="t-SNE visualization of latent contact primitives" />
+                <figcaption>Latent primitives form meaningful contact-event clusters.</figcaption>
+              </figure>
+              <figure>
+                <img src="assets/figures/gate.png" alt="Temporal evolution of surprise-aware gate during lightbulb screwing" />
+                <figcaption>The gate increases as the rollout enters contact-critical phases.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="section-anchor" id="robustness">
+            <h2>Robustness</h2>
+            <p>
+              ResTacVLA remains effective under dynamic target displacement, surface height variation, and initial
+              grasp perturbation, showing that residual tactile cues support recovery when visual priors are unreliable.
+            </p>
+            <figure class="figure-full">
+              <img src="assets/figures/robustness.png" alt="Model robustness evaluation scenarios" />
+              <figcaption>Robustness settings include dynamic displacement, height variation, and grasp perturbation.</figcaption>
+            </figure>
+            <div class="table-wrap">
+              <table>
+                <caption>Robustness evaluation across environmental and actuation perturbations.</caption>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Dynamic</th>
+                    <th>Height +2 cm</th>
+                    <th>Height -2 cm</th>
+                    <th>Grasp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>pi0.5 Vision Only</td>
+                    <td>26.7</td>
+                    <td>33.3</td>
+                    <td>0.0</td>
+                    <td>8.0</td>
+                  </tr>
+                  <tr>
+                    <td>pi0.5 w/ T-UniT</td>
+                    <td>40.0</td>
+                    <td>46.7</td>
+                    <td>13.3</td>
+                    <td>20.0</td>
+                  </tr>
+                  <tr class="highlight-row">
+                    <td>ResTacVLA</td>
+                    <td>66.7</td>
+                    <td>53.3</td>
+                    <td>40.0</td>
+                    <td>52.0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section-anchor" id="citation">
+            <h2>Citation</h2>
+            <pre><code>@inproceedings{zhang2026restacvla,
+  title     = {Feeling the Unexpected: ResTacVLA for Contact-Rich Manipulation via Residual Tactile Representation},
+  author    = {Zhang, Pengwei and Xie, Bin and Hao, Ce and Meng, Xinpan and Guo, Xinyu and Deng, Fang and Cheng, Long and Wang, Tiancai},
+  booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year      = {2026}
+}</code></pre>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <a href="#top">Back to top</a>
+      <span>ResTacVLA</span>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
